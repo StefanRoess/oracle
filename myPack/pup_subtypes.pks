@@ -11,5 +11,9 @@ as
   subtype xl_vc2  is varchar2(4000  char);  -- xl  4000
   subtype xxl_vc2 is varchar2(32767 char);  -- xxl 32767
 
+  ---
+  subtype st_raw is raw(32);
+
+
 end;
 /

@@ -21,9 +21,9 @@ as
   -- MBR     20.01.2011  Created
   ------------------------------------------------------------
 
-  m_encryption_type_aes  constant pls_integer := dbms_crypto.encrypt_aes256 +
-                                                 dbms_crypto.chain_cbc      +
-                                                 dbms_crypto.pad_pkcs5;
+  m_encryption_type_aes  constant pls_integer := sys.dbms_crypto.encrypt_aes256 +
+                                                 sys.dbms_crypto.chain_cbc      +
+                                                 sys.dbms_crypto.pad_pkcs5;
 
   /* ========================================================================== */
   /* ========================================================================== */
@@ -38,18 +38,18 @@ as
   -- MBR     20.01.2011  Created
   ------------------------------------------------------------
   function encrypt (pi_blob in blob, pi_key in varchar2)
-    return blob
+    return blob deterministic
   as
-    l_key_raw  raw(32);
+    l_key_raw  st_pkg.st_raw;
     l_return   blob;
 
   begin
-    l_key_raw := utl_raw.cast_to_raw (pi_key);
-    dbms_lob.createtemporary (l_return, false);
-    dbms_crypto.encrypt (dst => l_return
-                       , src => pi_blob
-                       , typ => m_encryption_type_aes
-                       , key => l_key_raw);
+    l_key_raw := sys.utl_raw.cast_to_raw (pi_key);
+    sys.dbms_lob.createtemporary (l_return, false);
+    sys.dbms_crypto.encrypt (dst => l_return
+                           , src => pi_blob
+                           , typ => m_encryption_type_aes
+                           , key => l_key_raw);
 
     return l_return;
 
@@ -68,18 +68,18 @@ as
   -- MBR     20.01.2011  Created
   ------------------------------------------------------------
   function encrypt (pi_clob in clob, pi_key in varchar2)
-    return blob
+    return blob deterministic
   as
-    l_key_raw  raw(32);
+    l_key_raw  st_pkg.st_raw;
     l_return   blob;
 
   begin
-    l_key_raw := utl_raw.cast_to_raw (pi_key);
-    dbms_lob.createtemporary (l_return, false);
-    dbms_crypto.encrypt (dst => l_return
-                       , src => pi_clob
-                       , typ => m_encryption_type_aes
-                       , key => l_key_raw);
+    l_key_raw := sys.utl_raw.cast_to_raw (pi_key);
+    sys.dbms_lob.createtemporary (l_return, false);
+    sys.dbms_crypto.encrypt (dst => l_return
+                           , src => pi_clob
+                           , typ => m_encryption_type_aes
+                           , key => l_key_raw);
 
     return l_return;
 
@@ -98,16 +98,16 @@ as
   -- MBR     20.01.2011  Created
   ------------------------------------------------------------
   function dec2blob (pi_blob in blob, pi_key in varchar2)
-    return blob
+    return blob deterministic
   as
-    l_key_raw    raw(32);
+    l_key_raw    st_pkg.st_raw;
     l_return     blob;
 
   begin
-    l_key_raw := utl_raw.cast_to_raw (pi_key);
-    dbms_lob.createtemporary (l_return, false);
+    l_key_raw := sys.utl_raw.cast_to_raw (pi_key);
+    sys.dbms_lob.createtemporary (l_return, false);
 
-    dbms_crypto.decrypt (
+    sys.dbms_crypto.decrypt (
               dst => l_return
             , src => pi_blob
             , typ => m_encryption_type_aes
@@ -132,16 +132,16 @@ as
   -- MBR     20.01.2011  Created
   ------------------------------------------------------------
   function dec2clob (pi_blob in blob, pi_key in varchar2)
-    return clob
+    return clob deterministic
   as
-    l_key_raw    raw(32);
+    l_key_raw    st_pkg.st_raw;
     l_return     clob;
 
   begin
-    l_key_raw := utl_raw.cast_to_raw (pi_key);
-    dbms_lob.createtemporary (l_return, false);
+    l_key_raw := sys.utl_raw.cast_to_raw (pi_key);
+    sys.dbms_lob.createtemporary (l_return, false);
 
-    dbms_crypto.decrypt (
+    sys.dbms_crypto.decrypt (
               dst => l_return
             , src => pi_blob
             , typ => m_encryption_type_aes
