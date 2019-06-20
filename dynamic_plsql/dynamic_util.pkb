@@ -149,6 +149,7 @@ as
    Remarks:
   
    call example:
+   select dynamic_util.get_string('schema', 'table_name', 'table_name_hist') from dual;
    select dynamic_util.get_string('apex_skyline', 'f_kaufpreis', 'f_kaufpreis_hist') from dual;
    select dynamic_util.get_string('schema', 'table', 'hist_table', threshold_nr) from dual;
 
