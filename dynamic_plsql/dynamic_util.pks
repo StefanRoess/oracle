@@ -4,7 +4,7 @@ as
   ------------------------------------------------------------
   -- Purpose:
   --
-  -- Remarks:
+  -- Remarks: https://blogs.oracle.com/oraclemagazine/a-fresh-look-at-auditing-row-changes
   --
   -- Who     Date        Description
   -- ------  ----------  -------------------------------------
