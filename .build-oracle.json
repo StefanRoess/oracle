@@ -6,5 +6,5 @@
   {
     "targetName": "sys",
     "connectionString": "sys/Oracle18c@ora18pdb as sysdba"
-  }
+  } 
 ]
