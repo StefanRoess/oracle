@@ -104,7 +104,7 @@ as
       -- aus der Ursprungstabelle erzeugt wird,
       -- dann könnte bei der Übergabe in die Hist-Table der Wert NULL sein.
       -- Deshalb beobachten und den PK Eintrag eventuell verändern.
-      -- Beispiel
+      -- Beispiel eines eventuell verkehrten Eintrages:
       -- l_audit_rows(l_audit_rows.count).customer_id := :new.customer_id;
       -----------------------------------------------------------------------
       l_string := l_string || '      l_audit_rows(l_audit_rows.count).'||rpad(l_atc(idx).column_name, g_space)||' := :new.'||l_atc(idx).column_name||';'||const_pkg.c_cr;
