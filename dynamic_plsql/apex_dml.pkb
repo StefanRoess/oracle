@@ -743,6 +743,7 @@ as
     Remarks:
    
     call example for db (backend)
+    select apex_dml.get_string('table_name', 'pk_column') from dual;
     select apex_dml.get_string('f_kaufpreis', 'kp_sk') from dual;
     select apex_dml.get_string('d_objectdata', 'objd_id') from dual;
     select apex_dml.get_string(pi_table => 'demo_customers'
@@ -752,6 +753,7 @@ as
 
     ---
     call example for apex (page designer)
+    select apex_dml.get_string('table_name, 'pk_column', page_id, 'apex') from dual;
     select apex_dml.get_string('f_kaufpreis', 'kp_sk', 200, 'apex') from dual;
     select apex_dml.get_string('d_objectdata', 'objd_id', 200, 'apex') from dual;
     select apex_dml.get_string('demo_customers', 'customer_id', 200, 'apex') from dual;
