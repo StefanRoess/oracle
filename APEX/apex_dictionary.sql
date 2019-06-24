@@ -65,7 +65,7 @@ select workspace
 -- Select a certain view:
 -------------------------------------------------------------
 select distinct apex_view_name
-    , 'select * from '|| apex_view_name|| ' where application_id = &app_id.;'|| chr (10)
+    , 'select * from '|| apex_view_name|| ' where application_id = &app_id.;'
   from apex_dictionary
   where 1=1
   and apex_view_name like upper ('%AUTH%')
