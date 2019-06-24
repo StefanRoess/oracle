@@ -190,36 +190,42 @@ select list_name, list_entries, component_comment
   where 1 = 1
   and application_id = :app_id
 ;
-       
--- todo Stefan Roess
 
 ----------------
 -- List Entries
 ----------------
-  SELECT list_name tab
-        ,entry_text list_text
-        ,authorization_scheme
-        ,current_for_pages_type
-        ,current_for_pages_expression
-        ,condition_type
-        ,condition_expression1
-        ,condition_expression2
-        ,entry_attribute_01            -- comment field
-    FROM apex_application_list_entries
-   WHERE 1 = 1 AND application_id = :app_id
-   and (condition_type_code != 'NEVER' or condition_type_code is null)
-ORDER BY list_name, display_sequence;
+select list_name
+     , entry_text
+     , display_sequence
+     , authorization_scheme
+     , current_for_pages_type
+     , current_for_pages_expression
+     , condition_type
+     , condition_expression1
+     , condition_expression2
+     , entry_attribute_01            -- comment field
+  from apex_application_list_entries
+  where 1 = 1
+  and application_id = :app_id
+  and (condition_type_code != 'NEVER' or condition_type_code is null)
+  order by list_name, display_sequence
+;
 
 
-select lpad(' ', 2*level) || entry_text
+---------------------------------------
+-- Hierachische Order der List-Entries
+---------------------------------------
+select lpad(' ', 2*level) || entry_text list_entry
   from apex_application_list_entries a
   where 1=1
   and a.application_id =:app_id
-  --and   a.list_name = 'navigation menu'
   and (condition_type_code != 'NEVER' or condition_type_code is null)
   start with a.list_entry_parent_id is null
-  connect by prior a.list_entry_id = a.list_entry_parent_id;
+  connect by prior a.list_entry_id = a.list_entry_parent_id
+;
 
+
+-- todo Stefan Roess
 
 
 -----------------------------
