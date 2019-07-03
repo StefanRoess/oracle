@@ -224,88 +224,92 @@ select lpad(' ', 2*level) || entry_text list_entry
   connect by prior a.list_entry_id = a.list_entry_parent_id
 ;
 
-
--- todo Stefan Roess
-
-
 -----------------------------
 -- General Page informations
 -----------------------------
-  SELECT page_id
-        ,page_name
-        ,page_template
-        ,page_group
-        ,page_comment
-        ,authorization_scheme
-        ,page_requires_authentication
-        ,page_access_protection
-        ,read_only_condition_type
-        ,read_only_condition_exp1
-        ,read_only_condition_exp2
-        ,regions
-        ,items
-        ,buttons
-        ,computations
-        ,validations
-        ,processes
-        ,branches
-    FROM apex_application_pages
-   WHERE application_id = :app_id
-ORDER BY page_id;
+select page_id
+     , page_name
+     , page_template
+     , page_group
+     , page_comment
+     , authorization_scheme
+     , page_requires_authentication
+     , page_access_protection
+     , read_only_condition_type
+     , read_only_condition_exp1
+     , read_only_condition_exp2
+     , regions
+     , items
+     , buttons
+     , computations
+     , validations
+     , processes
+     , branches
+  from apex_application_pages
+  where 1=1
+  and application_id = :app_id
+  order by page_id
+;
 
 
 --------------------------
 -- Regarding Page Regions
 --------------------------
-  SELECT page_id
-        ,region_name
-        ,source_type
-        ,items
-        ,buttons
-        ,component_comment
-        ,condition_type
-        ,condition_type_code
-        ,condition_expression1
-        ,condition_expression2
-        ,read_only_condition_type
-        ,read_only_condition_type_code
-        ,read_only_condition_exp1
-        ,read_only_condition_exp2
-    FROM apex_application_page_regions
-   WHERE 1 = 1
-     AND application_id = :app_id
-     AND (condition_type_code != 'NEVER' OR condition_type_code IS NULL)
-     and source_type not in ('Breadcrumb')
-ORDER BY page_id, display_sequence;
+select page_id
+     , region_name
+     , source_type
+     , items
+     , buttons
+     , component_comment
+     , condition_type
+     , condition_type_code
+     , condition_expression1
+     , condition_expression2
+     , read_only_condition_type
+     , read_only_condition_type_code
+     , read_only_condition_exp1
+     , read_only_condition_exp2
+  from apex_application_page_regions
+  where 1 = 1
+  and application_id = :app_id
+  and (condition_type_code != 'NEVER' or condition_type_code is null)
+  and source_type not in ('Breadcrumb')
+  order by page_id, display_sequence
+;
 
 
 -----------------------------------------------------------
 -- Page Regions which have a certain NULL value in Columns
 -----------------------------------------------------------
-SELECT   *
-  FROM APEX_APPLICATION_PAGE_REGIONS
-  WHERE application_id = :app_id
-  AND REPORT_NULL_VALUES_AS = '-' 
+select   *
+  from apex_application_page_regions
+  where 1=1
+  and application_id = :app_id
+  and report_null_values_as = '-'
 ;
 
 
 --------------------------
 -- Regarding Page Buttons
 --------------------------
+select page_id
+     , button_name
+     , authorization_scheme
+     , component_comment
+     , database_action
+     , condition_type
+     , condition_type_code
+     , condition_expression1
+     , condition_expression2
+  from apex_application_page_buttons
+  where 1 = 1 and application_id = :app_id
+  and (condition_type_code != 'NEVER' or condition_type_code is null)
+  order by page_id
+;
 
-  SELECT page_id
-        ,button_name
-        ,authorization_scheme
-        ,component_comment
-        ,database_action
-        ,condition_type
-        ,condition_type_code
-        ,condition_expression1
-        ,condition_expression2
-    FROM apex_application_page_buttons
-   WHERE 1 = 1 AND application_id = :app_id
-   and (condition_type_code != 'NEVER' or condition_type_code is null)
-ORDER BY page_id;
+
+-- todo Stefan Roess
+
 
 -------------------------------------------
 -- Regarding Page Buttons with Region Name
@@ -837,4 +841,5 @@ select *
   from APEX_APPL_PAGE_IGS
   where 1=1
   and application_id = :app_id
-  and javascript_code is not null;
+  and javascript_code is not null
+;
