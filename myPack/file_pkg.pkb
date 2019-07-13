@@ -1,35 +1,33 @@
 create or replace package body file_pkg
 as
 
-  /*
 
-  Purpose:      Package contains file utilities
+  -- Purpose:      Package contains file utilities
 
-  Remarks:
+  -- Remarks:
 
-  Who     Date        Description
-  ------  ----------  --------------------------------
-  MBR     01.01.2005  Created
-  MBR     18.01.2011  Added blob/clob operations
+  -- Who     Date        Description
+  -- ------  ----------  --------------------------------
+  -- MBR     01.01.2005  Created
+  -- MBR     18.01.2011  Added blob/clob operations
 
-  */
 
   /* =========================================================================== */
   /* =========================================================================== */
   /* =========================================================================== */
-  /* -------------------------------------------------------------------------
-  Purpose: resolve filename, ie. properly concatenate dir and filename
+  -- -------------------------------------------------------------------------
+  -- Purpose: resolve filename, ie. properly concatenate dir and filename
 
-  Remarks:
+  -- Remarks:
 
-  call example:
-  select file_pkg.resolve_filename('c:\path1\path2', 'file.ext') from dual;
-  select file_pkg.resolve_filename('c:\path1\path2\', 'file.ext') from dual;
+  -- call example:
+  -- select file_pkg.resolve_filename('c:\path1\path2', 'file.ext') from dual;
+  -- select file_pkg.resolve_filename('c:\path1\path2\', 'file.ext') from dual;
 
-  Who     Date        Description
-  ------  ----------  --------------------------------------------------
-  MBR     01.01.2005  Created
-  ------------------------------------------------------------------------- */
+  -- Who     Date        Description
+  -- ------  ----------  --------------------------------------------------
+  -- MBR     01.01.2005  Created
+  -- -------------------------------------------------------------------------
   function resolve_filename ( pi_dir       in varchar2
                             , pi_file_name in varchar2
                             , pi_os        in varchar2 := g_os_windows)
@@ -78,7 +76,7 @@ as
    Purpose: return the filename portion of the full file name
 
    Remarks:
-  
+
    call example:
       select file_pkg.extract_filename('c:\path1\path2\file.ext') from dual;
   
