@@ -687,14 +687,14 @@ as
     ----------
     -- *note*
     ----------
-    l_return :=                    try_parse_date (pi_str, 'DD.MM.RRRR HH24:MI:SS');
+    l_return :=                    try_parse_date (pi_str, 'DD.MM.YYYY HH24:MI:SS');
     l_return := coalesce(l_return, try_parse_date (pi_str, 'DD.MM HH24:MI:SS'));
     l_return := coalesce(l_return, try_parse_date (pi_str, 'DDMMYYYY HH24:MI:SS'));
     l_return := coalesce(l_return, try_parse_date (pi_str, 'DDMMRRRR HH24:MI:SS'));
     l_return := coalesce(l_return, try_parse_date (pi_str, 'YYYY.MM.DD HH24:MI:SS'));
     l_return := coalesce(l_return, try_parse_date (pi_str, 'MM.YYYY'));
     l_return := coalesce(l_return, try_parse_date (pi_str, 'YYYY'));
-    l_return := coalesce(l_return, try_parse_date (pi_str, 'DD.MON.RRRR HH24:MI:SS'));
+    l_return := coalesce(l_return, try_parse_date (pi_str, 'DD.MON.YYYY HH24:MI:SS'));
     l_return := coalesce(l_return, try_parse_date (pi_str, 'YYYY-MM-DD"T"HH24:MI:SS".000Z"')); -- standard XML date format
 
     return l_return;
