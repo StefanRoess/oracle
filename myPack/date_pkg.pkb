@@ -443,9 +443,9 @@ as
     l_seconds := coalesce(((l_minutes - trunc(l_minutes))) * 60, 0);
 
     if pi_days < 0 then
-      l_sign:='minus ';
+      l_sign := 'minus ';
     else
-      l_sign:='';
+      l_sign := '';
     end if;
 
     l_days    := abs(l_days);
