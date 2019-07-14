@@ -115,7 +115,7 @@ as
       end if;
 
     else
-      l_return:=null;
+      l_return := null;
     end if;
 
     return l_return;
