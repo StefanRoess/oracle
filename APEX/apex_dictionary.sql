@@ -307,58 +307,58 @@ select page_id
   order by page_id
 ;
 
-
--- todo Stefan Roess
-
-
 -------------------------------------------
 -- Regarding Page Buttons with Region Name
 -------------------------------------------
-  SELECT b.page_id
-        ,r.region_name
-        ,b.button_name
-        ,b.authorization_scheme
-        ,b.component_comment
-        ,b.database_action
-        ,b.condition_type
-        ,b.condition_type_code
-        ,b.condition_expression1
-        ,b.condition_expression2
-    FROM apex_application_page_buttons b, apex_application_page_regions r
-   WHERE 1 = 1
-     AND b.page_id = r.page_id
-     AND b.region_id = r.region_id
-     AND b.application_id = :app_id
-     AND (r.condition_type_code != 'NEVER' OR r.condition_type_code IS NULL)
-     and r.source_type not in ('Breadcrumb') 
-ORDER BY b.page_id;
+SELECT b.page_id
+     , r.region_name
+     , b.button_name
+     , b.authorization_scheme
+     , b.component_comment
+     , b.database_action
+     , b.condition_type
+     , b.condition_type_code
+     , b.condition_expression1
+     , b.condition_expression2
+  from apex_application_page_buttons b
+  join apex_application_page_regions r on (b.page_id = r.page_id and b.region_id = r.region_id)
+  where 1 = 1
+  and b.application_id = :app_id
+  and (r.condition_type_code != 'NEVER' or r.condition_type_code is null)
+  and r.source_type not in ('Breadcrumb')
+  order by b.page_id
+;
 
 ------------------------
 -- Regarding Page Items
 ------------------------
 
-  SELECT page_id
-        ,item_name
-        ,display_as
-        ,authorization_scheme
-        ,component_comment
-        ,is_required
-        ,item_default
-        ,item_source
-        ,item_source_type
-        ,read_only_condition_type
-        ,read_only_condition_type_code
-        ,read_only_condition_exp1
-        ,read_only_condition_exp2
-        ,condition_type
-        ,condition_type_code
-        ,condition_expression1
-        ,condition_expression2
-        ,item_help_text
-    FROM apex_application_page_items
-   WHERE 1 = 1 AND application_id = :app_id
-   and (condition_type_code != 'NEVER' or condition_type_code is null)
-ORDER BY page_id;
+select page_id
+     , item_name
+     , display_as
+     , authorization_scheme
+     , component_comment
+     , is_required
+     , item_default
+     , item_source
+     , item_source_type
+     , read_only_condition_type
+     , read_only_condition_type_code
+     , read_only_condition_exp1
+     , read_only_condition_exp2
+     , condition_type
+     , condition_type_code
+     , condition_expression1
+     , condition_expression2
+     , item_help_text
+  from apex_application_page_items
+  where 1 = 1 AND application_id = :app_id
+  and (condition_type_code != 'NEVER' or condition_type_code is null)
+  order by page_id
+;
+
+
+-- todo Stefan Roess
 
 
 ------------------
