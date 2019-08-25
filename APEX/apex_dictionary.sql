@@ -357,17 +357,20 @@ select page_id
   order by page_id
 ;
 
+------------------
+-- Item Help Text
+------------------
+select page_id, item_name, item_help_text
+  from apex_application_page_items
+  where 1=1
+  and application_id = :app_id
+  order by page_id
+;
+
 
 -- todo Stefan Roess
 
 
-------------------
--- Item Help Text
-------------------
-  SELECT page_id, item_name, item_help_text
-    FROM apex_application_page_items
-   WHERE application_id = :app_id
-ORDER BY page_id;
 
 ----------------------------------
 -- Items with certain CSS classes
