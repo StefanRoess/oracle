@@ -367,42 +367,54 @@ select page_id, item_name, item_help_text
   order by page_id
 ;
 
+----------------------------------
+-- Items with certain CSS classes
+----------------------------------
+select item_name
+     , label
+     , display_as
+     , item_css_classes               apperance_css_classes
+     , html_form_element_css_classes  advanced_css_classes
+     , html_form_element_attributes   advanced_custom_attributes
+     , grid_column_css_classes
+  from apex_application_page_items
+  where 1=1
+  and application_id  = :app_id
+  and page_id         = :page_id
+  order by page_id
+;
+
+-----------------------------
+-- Item Help Text and Labels
+-----------------------------
+select item_id
+     , page_id
+     , item_name
+     , label
+     , display_as
+     , item_help_text
+  from apex_application_page_items
+  where 1=1
+  and application_id = :app_id
+  and page_id not in (0)
+;
+
+-----------------------------------------------------------------
+-- all Text-Fields with a read_only HTML Form Element Attribute
+-----------------------------------------------------------------
+select *
+  from apex_application_page_items
+  where 1 = 1
+  and application_id = :app_id
+  and upper (html_form_element_attributes) LIKE '%READONLY%'
+  order by page_id
+;
+
 
 -- todo Stefan Roess
 
 
 
-----------------------------------
--- Items with certain CSS classes
-----------------------------------
-  select item_name, label, display_as, item_css_classes, GRID_COLUMN_CSS_CLASSES
-    from apex_application_page_items
-   where application_id = :app_id
-     and page_id = :page_id
-ORDER BY page_id;
-
------------------------------
--- Item Help Text and Labels
------------------------------
-SELECT item_id
-      ,page_id
-      ,item_name
-      ,label
-      ,display_as
-      ,item_help_text
-  FROM apex_application_page_items
- WHERE 1 = 1 AND application_id = :app_id AND page_id NOT IN (0);
-
------------------------------------------------------------------
--- all Text-Fields with a read_only HTML Form Element Attribute
------------------------------------------------------------------
-  SELECT *
-    FROM apex_application_page_items
-   WHERE 1 = 1
-     AND application_id = :app_id
-     AND display_as = 'Text Field'
-     AND UPPER (html_form_element_attributes) LIKE '%READONLY%'
-ORDER BY page_id;
 
 ------------------------------------------------------
 -- all required Page-Items and the corresponding label
