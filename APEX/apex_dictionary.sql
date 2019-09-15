@@ -462,7 +462,8 @@ select *
   from apex_application_page_ir
   where 1=1
   and application_id = :app_id
-  and show_nulls_as = '-';
+  and show_nulls_as = '-'
+;
 
 -- todo Stefan Roess
 
