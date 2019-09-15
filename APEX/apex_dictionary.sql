@@ -98,7 +98,7 @@ select distinct
        || ''', a.* from APEX_180200.'
        || table_name
        || ' a'
-       || ' where TO_CHAR(a.last_updated_on,''yyyy-mm-dd'') > to_char(sysdate-1,''yyyy-mm-dd'');'
+       || ' where to_char(a.last_updated_on,''yyyy-mm-dd'') > to_char(sysdate-1,''yyyy-mm-dd'');'
   from dba_tab_columns
   where owner = 'APEX_180200'
   and column_name = 'LAST_UPDATED_ON'
