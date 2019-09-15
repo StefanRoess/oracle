@@ -411,76 +411,64 @@ select *
 ;
 
 
+------------------------------------------------------
+-- all required Page-Items and the corresponding label
+------------------------------------------------------
+select  pi.is_required, pi.*
+  from apex_application_page_items pi
+  where 1=1
+  and application_id = :app_id
+  and page_id = :app_page_id
+  and is_required = 'Yes'
+  and lower(pi.item_label_template) not in ('required', 'hidden')
+  order by pi.page_id
+;
+
+------------------------------------------------
+-- all Text-Field Items which are not READ_ONLY.
+-- must some of them to be "Number Fields"?
+------------------------------------------------
+ SELECT i.page_id
+      , i.page_name
+      , i.item_name
+      , i.display_as
+      , i.label
+      , i.format_mask
+      , i.is_required
+      , i.condition_type_code Item_COND
+      , r.condition_type_code Region_COND
+      , i.read_only_condition_type
+      , i.region
+      , r.read_only_condition_type_code
+      , p.read_only_condition_type_code
+  from apex_application_pages        p
+  join apex_application_page_items   i on (p.application_id = i.application_id and p.page_id = i.page_id)
+  join apex_application_page_regions r on (i.application_id = r.application_id and i.page_id = r.page_id and i.region_id = r.region_id)
+  where 1=1
+  and p.application_id = :app_id
+  and i.display_as = 'Text Field'
+  and (i.condition_type_code is null or i.condition_type_code != 'NEVER')
+  and (r.condition_type_code is null or r.condition_type_code != 'NEVER')
+  and (i.read_only_condition_type_code is null or i.read_only_condition_type_code != 'ALWAYS')
+  and (r.read_only_condition_type_code is null or r.read_only_condition_type_code != 'ALWAYS')
+  and (p.read_only_condition_type_code is null or p.read_only_condition_type_code != 'ALWAYS')
+  order by p.page_id
+;   
+    
+--------------------------------------------------------
+-- Interactive Reports which contains '-' as NULL Value
+--------------------------------------------------------
+select *
+  from apex_application_page_ir
+  where 1=1
+  and application_id = :app_id
+  and show_nulls_as = '-';
+
 -- todo Stefan Roess
 
 
 
 
-------------------------------------------------------
--- all required Page-Items and the corresponding label
-------------------------------------------------------
-  SELECT  *
-      FROM APEX_APPLICATION_PAGE_ITEMS
-      WHERE application_id = :APP_ID
-      --AND page_id = :APP_PAGE_ID
-      AND is_required = 'Yes'
-      and item_label_template not in ('Required', 'Hidden')
-      order by page_id;
-  
-------------------------------------------------
--- all Text-Field Items which are not READ_ONLY.
--- must some of them to be "Number Fields"?
-------------------------------------------------
-SELECT i.page_id
-      ,i.page_name
-      ,i.item_name
-      ,i.display_as
-      ,i.label
-      ,i.format_mask
-      ,i.is_required
-      ,i.condition_type_code Item_COND
-      ,r.condition_type_code Region_COND
-      ,i.read_only_condition_type
-      ,i.region
-      ,r.read_only_condition_type_code
-      ,p.read_only_condition_type_code
-  FROM apex_application_page_items i
-      ,apex_application_page_regions r
-      ,apex_application_pages p
-  WHERE i.application_id = :app_id
-    AND p.application_id = i.application_id
-    AND i.page_id = p.page_id
-    AND i.region_id = r.region_id
-    AND i.display_as = 'Text Field'
-    AND (
-        i.condition_type_code IS NULL
-     OR i.condition_type_code != 'NEVER'
-    )
-    AND (
-        r.condition_type_code IS NULL
-    OR r.condition_type_code != 'NEVER'
-    )
-    AND (
-        i.read_only_condition_type_code IS NULL
-     OR i.read_only_condition_type_code != 'ALWAYS'
-    )
-    AND (
-        r.read_only_condition_type_code IS NULL
-     OR r.read_only_condition_type_code != 'ALWAYS'
-    )
-    AND (
-        p.read_only_condition_type_code IS NULL
-     OR p.read_only_condition_type_code != 'ALWAYS'
-    )
-    ORDER BY i.page_id;
-
---------------------------------------------------------
--- Interactive Reports which contains '-' as NULL Value
---------------------------------------------------------
-SELECT *
-  FROM APEX_APPLICATION_PAGE_IR
-  WHERE application_id = :app_id
-  AND show_nulls_as = '-';
 
 ----------------------------------------
 -- Regarding Page Item with Region Name
