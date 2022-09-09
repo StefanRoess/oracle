@@ -179,7 +179,7 @@ as
                              , pi_equal            in varchar2 := g_equal)
     return varchar2;
 
-
+sdsdf
 end string_pkg;
 /
 
